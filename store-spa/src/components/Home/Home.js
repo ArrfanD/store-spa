@@ -25,12 +25,14 @@ const Home = () => {
     (x) => x.category === "women's clothing"
   );
 
+  
+
   useEffect(() => {
     dataFetcher();
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <img src={HomeHeader} alt="header" />
       <div className="absolute top-[210px] w-full h-auto flex flex-col items-center">
         <div className="w-[96%] drop-shadow-2xl bg-orange-100 flex flex-wrap">
