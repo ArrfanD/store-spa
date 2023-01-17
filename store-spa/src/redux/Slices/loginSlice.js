@@ -4,6 +4,7 @@ let initialState = {
     name: '',
     phone: '',
     email: '',
+    dataArray: []
 }
 
 export const loginSlice = createSlice({
@@ -11,9 +12,12 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
         logindata: (state, actions) => {
-            state = actions.payload
+            const { payload } = actions
+            console.log('data fetched into the reducer', payload)
+            state.dataArray = actions.payload
         }
     }
 })
 
 export default loginSlice.reducer
+export const { logindata } = loginSlice.actions
