@@ -37,7 +37,7 @@ const { scrollYProgress } = useScroll();
 
   return (
     <div  className="relative ">
-      <motion.div className="w-full fixed h-2 origin-left bg-black top-0 left-0 z-10" style={{ scaleX: scrollYProgress }} ></motion.div>
+      <motion.div className="w-full fixed h-2 origin-left bg-red-600 top-0 left-0 z-10" style={{ scaleX: scrollYProgress }} ></motion.div>
       <img src={HomeHeader} alt="header" />
       <div className="absolute top-[210px] w-full h-auto flex flex-col items-center">
         <div className="w-[96%] drop-shadow-2xl bg-orange-100 flex flex-wrap">

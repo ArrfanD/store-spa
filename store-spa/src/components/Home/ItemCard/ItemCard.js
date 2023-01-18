@@ -3,7 +3,11 @@ import upArrow from "../../../assets/images/buttons/arrow-up-line.png";
 import downArrow from "../../../assets/images/buttons/arrow-down-line.png";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { increaseAmount, decreaseAmount } from '../../../redux/Slices/cartSlice'
+import {
+  increaseAmount,
+  decreaseAmount,
+} from "../../../redux/Slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const ItemCard = ({
   data: {
@@ -24,14 +28,16 @@ const ItemCard = ({
       whileHover={{ scale: 1.02 }}
       className="flex drop-shadow-2xl items-center content-center mx-auto"
     >
-      <div className="flex drop-shadow-2xl bg-white w-[530px] my-10 h-[300px] p-6 rounded-[3px]">
+      <div className="flex drop-shadow-2xl pb-7 bg-white w-[530px] my-10 h-[300px] p-6 rounded-[3px]">
         <img
           src={image}
           alt="image"
           className="w-[140px] ml-1 mr-5 h-auto object-contain shadow-purple-300"
         />
         <div className="flex flex-col content-evenly items-center">
-          <h1 className="w-[300px]">{title}</h1>
+          <Link to={`/product/${id}`}>
+            <h1 className="w-[300px]">{title}</h1>
+          </Link>
           <p className="text-[10px] w-[300px] mt-4 h-[200px] overflow-y-auto overflow-x-hidden">
             {description}
           </p>
@@ -45,10 +51,21 @@ const ItemCard = ({
             >
               Add to Cart
             </motion.button>
-            <div className={`${amount > 0 ? "visible" : "hidden"}`}>
-              <img src={upArrow} onClick={()=> dispatch(increaseAmount(id))} alt="up" /> <img onClick={()=> dispatch(decreaseAmount(id))} src={downArrow} alt="down" />
+            <div className={`${amount > 0 ? "visible" : "invisible"}`}>
+              <img
+                src={upArrow}
+                onClick={() => dispatch(increaseAmount(id))}
+                alt="up"
+              />{" "}
+              <img
+                onClick={() => dispatch(decreaseAmount(id))}
+                src={downArrow}
+                alt="down"
+              />
             </div>
-            <h1  className={`${amount > 0 ? "visible ml-4" : "hidden ml-4"}`}>{amount}</h1>
+            <h1 className={`${amount > 0 ? "visible ml-4" : "invisible ml-4"}`}>
+              {amount}
+            </h1>
           </div>
         </div>
       </div>
