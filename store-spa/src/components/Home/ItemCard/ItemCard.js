@@ -1,8 +1,9 @@
 import React from "react";
 import upArrow from "../../../assets/images/buttons/arrow-up-line.png";
 import downArrow from "../../../assets/images/buttons/arrow-down-line.png";
-import { addToCart } from "../../../redux/Slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { increaseAmount, decreaseAmount } from '../../../redux/Slices/cartSlice'
 
 const ItemCard = ({
   data: {
@@ -13,11 +14,16 @@ const ItemCard = ({
     category,
     image,
     rating: { rate, count },
+    amount,
   },
+  func,
 }) => {
-    let dispatch = useDispatch()
+  let dispatch = useDispatch();
   return (
-    <div className="flex drop-shadow-2xl items-center content-center mx-auto">
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="flex drop-shadow-2xl items-center content-center mx-auto"
+    >
       <div className="flex drop-shadow-2xl bg-white w-[530px] my-10 h-[300px] p-6 rounded-[3px]">
         <img
           src={image}
@@ -32,17 +38,21 @@ const ItemCard = ({
           <h2 className="mt-2">Rating : {rate}</h2>
           <h3 className="mb-6">No of Ratings : {count}</h3>
           <div className="flex items-center h-6 content-between m-0">
-            <button onClick={()=> dispatch(addToCart(id))} className="mr-6 w-[100px] drop-shadow-2xl rounded-[4px] bg-orange-100 h-[25px]">
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              onClick={() => func(id)}
+              className="mr-6 w-[100px] drop-shadow-2xl rounded-[4px] bg-orange-100 h-[25px]"
+            >
               Add to Cart
-            </button>
-            <div>
-              <img src={upArrow} alt="up" /> <img src={downArrow} alt="down" />
+            </motion.button>
+            <div className={`${amount > 0 ? "visible" : "hidden"}`}>
+              <img src={upArrow} onClick={()=> dispatch(increaseAmount(id))} alt="up" /> <img onClick={()=> dispatch(decreaseAmount(id))} src={downArrow} alt="down" />
             </div>
-            <h1 className="ml-4">1</h1>
+            <h1  className={`${amount > 0 ? "visible ml-4" : "hidden ml-4"}`}>{amount}</h1>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

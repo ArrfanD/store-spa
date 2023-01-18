@@ -13,8 +13,7 @@ export const loginSlice = createSlice({
     reducers: {
         logindata: (state, actions) => {
             const { payload } = actions
-            console.log('data fetched into the reducer', payload)
-            state.dataArray = actions.payload
+            // console.log('what is this payload? ',payload )
         }
     }
 })
