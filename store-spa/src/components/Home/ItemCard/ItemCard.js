@@ -7,7 +7,8 @@ import {
   increaseAmount,
   decreaseAmount,
 } from "../../../redux/Slices/cartSlice";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { selectProduct } from "../../../redux/Slices/cartSlice";
 
 const ItemCard = ({
   data: {
@@ -22,7 +23,14 @@ const ItemCard = ({
   },
   func,
 }) => {
+  let navigate = useNavigate()
   let dispatch = useDispatch();
+
+  function handleProductOpen () {
+    dispatch(selectProduct(id))
+    navigate('/product')
+  }
+
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
@@ -35,9 +43,7 @@ const ItemCard = ({
           className="w-[140px] ml-1 mr-5 h-auto object-contain shadow-purple-300"
         />
         <div className="flex flex-col content-evenly items-center">
-          <Link to={`/product/${id}`}>
-            <h1 className="w-[300px]">{title}</h1>
-          </Link>
+            <h1 onClick={handleProductOpen} className="w-[300px]">{title}</h1>
           <p className="text-[10px] w-[300px] mt-4 h-[200px] overflow-y-auto overflow-x-hidden">
             {description}
           </p>

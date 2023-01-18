@@ -4,6 +4,7 @@ let initialState = {
   product: [],
   quantity: { quantity: 0, id: "" },
   idOfItemAddedToCart: "",
+  selectedProduct: ''
 };
 
 export const cartSlice = createSlice({
@@ -52,9 +53,12 @@ export const cartSlice = createSlice({
       // console.log(' sort sort ssort', amountIncreased)
       state.product = amountDecreased;
     },
+    selectProduct: (state,{ payload }) => {
+        state.selectedProduct = payload
+    }
   },
 });
 
-export const { setInitialState, addProductToCart, increaseAmount, decreaseAmount } =
+export const { setInitialState, addProductToCart, increaseAmount, decreaseAmount, selectProduct } =
   cartSlice.actions;
 export default cartSlice.reducer;
