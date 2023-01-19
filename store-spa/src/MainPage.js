@@ -14,8 +14,11 @@ const MainPage = () => {
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<Error />} />
       <Route path="/product" element={<ProductPage />} />
+      <Route path="/cart/:id" element={<Cart />}/>
     </Routes>
   );
 };
 
 export default MainPage;
+
+

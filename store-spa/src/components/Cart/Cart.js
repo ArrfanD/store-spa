@@ -1,12 +1,19 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const Cart = () => {
+  let id = useParams()
   let {cart : { product, quantity }} = useSelector((state)=> state);
-  console.log('PRODUCTS IN CART', product)
   return (
-    <div>Cart</div>
+    <div className='flex'>
+      <div></div>
+      <div></div>
+    </div>
   )
 }
 
 export default Cart
+
+
+

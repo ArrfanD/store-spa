@@ -55,10 +55,22 @@ export const cartSlice = createSlice({
     },
     selectProduct: (state,{ payload }) => {
         state.selectedProduct = payload
+    },
+    addProductToCartOnce: (state,{payload}) => {
+      let amountIncreased = [...state.product].map((item) => {
+        if (item.id === payload) {
+          let am = item.amount;
+          return { ...item, amount: 1 };
+        } else {
+          return item;
+        }
+      });
+      // console.log(' one one one one one', payload)
+      state.product = amountIncreased;
     }
   },
 });
 
-export const { setInitialState, addProductToCart, increaseAmount, decreaseAmount, selectProduct } =
+export const { setInitialState, addProductToCart, increaseAmount, decreaseAmount, selectProduct, addProductToCartOnce } =
   cartSlice.actions;
 export default cartSlice.reducer;
