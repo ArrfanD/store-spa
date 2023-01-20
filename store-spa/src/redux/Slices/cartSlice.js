@@ -4,7 +4,10 @@ let initialState = {
   product: [],
   quantity: { quantity: 0, id: "" },
   idOfItemAddedToCart: "",
-  selectedProduct: ''
+  selectedProduct: "",
+  productsInCart: "",
+  cartPriceTotal: "",
+  cartQuantityTotal: "",
 };
 
 export const cartSlice = createSlice({
@@ -38,8 +41,12 @@ export const cartSlice = createSlice({
           return item;
         }
       });
-      // console.log(' sort sort ssort', amountIncreased)
+      console.log(" sort sort ssort", amountIncreased);
       state.product = amountIncreased;
+      state.cartQuantityTotal = amountIncreased.reduce(
+        (a, x) => a + x.amount,
+        0
+      );
     },
     decreaseAmount: (state, { payload }) => {
       let amountDecreased = [...state.product].map((item) => {
@@ -52,11 +59,15 @@ export const cartSlice = createSlice({
       });
       // console.log(' sort sort ssort', amountIncreased)
       state.product = amountDecreased;
+      state.cartQuantityTotal = amountDecreased.reduce(
+        (a, x) => a + x.amount,
+        0
+      );
     },
-    selectProduct: (state,{ payload }) => {
-        state.selectedProduct = payload
+    selectProduct: (state, { payload }) => {
+      state.selectedProduct = payload;
     },
-    addProductToCartOnce: (state,{payload}) => {
+    addProductToCartOnce: (state, { payload }) => {
       let amountIncreased = [...state.product].map((item) => {
         if (item.id === payload) {
           let am = item.amount;
@@ -67,10 +78,25 @@ export const cartSlice = createSlice({
       });
       // console.log(' one one one one one', payload)
       state.product = amountIncreased;
-    }
+    },
+    cartTotal: (state, { payload }) => {
+      console.log("reducer items check here", payload);
+      state.cartPriceTotal = payload.reduce(
+        (a, x) => a + x.amount * x.price * 83,
+        0
+      );
+      state.cartQuantityTotal = payload.reduce((a, x) => a + x.amount, 0);
+    },
   },
 });
 
-export const { setInitialState, addProductToCart, increaseAmount, decreaseAmount, selectProduct, addProductToCartOnce } =
-  cartSlice.actions;
+export const {
+  setInitialState,
+  addProductToCart,
+  cartTotal,
+  increaseAmount,
+  decreaseAmount,
+  selectProduct,
+  addProductToCartOnce,
+} = cartSlice.actions;
 export default cartSlice.reducer;

@@ -10,16 +10,23 @@ import { addProductToCart, setInitialState } from '../../redux/Slices/cartSlice'
 const Home = () => {
 const { scrollYProgress } = useScroll();
 
+let dataFetcher = async () => {
+  let response = await axios("http://localhost:3000/posts");
+  const apiResp = response?.data;
+  dispatch(setInitialState(apiResp));
+};
+
+
+
   let dispatch = useDispatch();
   let {
-    cart: { product },
+    cart: { product, quantity },
   } = useSelector((state) => state);
 
-  let dataFetcher = async () => {
-    let response = await axios("http://localhost:3000/posts");
-    const apiResp = response?.data;
-    dispatch(setInitialState(apiResp));
-  };
+  useEffect(() => {
+    dataFetcher();
+  }, [quantity]);
+
 
   let cartProductSender = (value) => {
     const productSentToCart = product.filter(x => x.id === value)
@@ -30,9 +37,7 @@ const { scrollYProgress } = useScroll();
     (x) => x.category === "women's clothing"
   );
   
-    useEffect(() => {
-    dataFetcher();
-  }, []);
+
 
   return (
     <div className="relative ">
