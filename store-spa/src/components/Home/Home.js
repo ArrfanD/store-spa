@@ -16,17 +16,16 @@ let dataFetcher = async () => {
   dispatch(setInitialState(apiResp));
 };
 
-
-
   let dispatch = useDispatch();
   let {
     cart: { product, quantity },
   } = useSelector((state) => state);
 
-  useEffect(() => {
-    dataFetcher();
-  }, [quantity]);
 
+  useEffect(() => {
+      dataFetcher();
+    
+  }, []);
 
   let cartProductSender = (value) => {
     const productSentToCart = product.filter(x => x.id === value)
@@ -37,8 +36,6 @@ let dataFetcher = async () => {
     (x) => x.category === "women's clothing"
   );
   
-
-
   return (
     <div className="relative ">
       <motion.div className="w-full fixed h-2 origin-left bg-red-600 top-0 left-0 z-10" style={{ scaleX: scrollYProgress }} ></motion.div>

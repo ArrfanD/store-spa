@@ -18,9 +18,23 @@ const Cart = () => {
   } = useSelector((state) => state);
   let cartProducts = product.filter((x) => x.amount > 0);
 
+  // console.log('cart price total =====>', cartPriceTotal)
+
+
+
+  function handleQtyIncrease(value) {
+    dispatch(increaseAmount(value));
+    dispatch(cartTotal(cartProducts));
+  }
+
+  function handleQtyDecrease(value) {
+    dispatch(decreaseAmount(value));
+    dispatch(cartTotal(cartProducts));
+  }
+
   useEffect(() => {
     dispatch(cartTotal(cartProducts));
-  }, []);
+  }, [product]);
 
   return (
     <div className="bg-gray-200 flex flex-col">
@@ -59,7 +73,7 @@ const Cart = () => {
                             <img
                               src={addIcon}
                               alt="add"
-                              onClick={() => dispatch(increaseAmount(id))}
+                              onClick={() => handleQtyIncrease(id)}
                               className="w-7 h-7 p-2 rounded-full border-gray-300 border "
                             />
                           </button>
@@ -72,7 +86,7 @@ const Cart = () => {
                             <img
                               src={subtractIcon}
                               alt="subtract"
-                              onClick={() => dispatch(decreaseAmount(id))}
+                              onClick={() => handleQtyDecrease(id)}
                               className="w-7 h-7 p-2 rounded-full border-gray-300 border"
                             />
                           </button>
@@ -113,7 +127,7 @@ const Cart = () => {
             </h1>
             <h1 className="inline-flex px-4 justify-between w-full">
               Discount
-              <span>- ₹{Math.floor(0.14 * cartPriceTotal).toString()}</span>
+              <span>- ₹{(Math.floor(0.14 * cartPriceTotal)).toFixed(1)}</span>
             </h1>
             <h1 className="inline-flex px-4 justify-between w-full">
               Delivery Charges <span>FREE</span>
@@ -137,16 +151,23 @@ const Cart = () => {
       </div>
       <div className="flex justify-between mx-auto items-center my-10 gap-2">
         <p className="text-gray-500">Policies: </p>
-        <p className="text-gray-500">Return Policy</p> <div className="w-[1px] h-3 bg-gray-500"></div> 
-        <p className="text-gray-500">Terms of Use</p> <div className="w-[1px] h-3 bg-gray-500"></div>
-        <p className="text-gray-500">Security</p> <div className="w-[1px] h-3 bg-gray-500"></div>
-        <p className="text-gray-500">Privacy</p> <div className="w-[1px] h-3 bg-gray-500"></div>
+        <p className="text-gray-500">Return Policy</p>{" "}
+        <div className="w-[1px] h-3 bg-gray-500"></div>
+        <p className="text-gray-500">Terms of Use</p>{" "}
+        <div className="w-[1px] h-3 bg-gray-500"></div>
+        <p className="text-gray-500">Security</p>{" "}
+        <div className="w-[1px] h-3 bg-gray-500"></div>
+        <p className="text-gray-500">Privacy</p>{" "}
+        <div className="w-[1px] h-3 bg-gray-500"></div>
         <p className="text-gray-500">Infringement</p>
         <div>
-          <p className="text-gray-500 mr-[110px] ml-6">© 2007-2023 Flipkart.com</p>
+          <p className="text-gray-500 mr-[110px] ml-6">
+            © 2007-2023 Flipkart.com
+          </p>
         </div>
-        <p className="text-gray-500 ml-5">Need help? Visit the Help Center or Contact Us</p>
-
+        <p className="text-gray-500 ml-5">
+          Need help? Visit the Help Center or Contact Us
+        </p>
       </div>
     </div>
   );

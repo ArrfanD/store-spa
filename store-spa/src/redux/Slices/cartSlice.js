@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
   product: [],
+  cartProducts: [],
   quantity: { quantity: 0, id: "" },
   idOfItemAddedToCart: "",
   selectedProduct: "",
@@ -30,6 +31,7 @@ export const cartSlice = createSlice({
       });
       // console.log(' sort sort ssort', amountIncreased)
       state.product = amountIncreased;
+      state.cartProducts = amountIncreased;
     },
     increaseAmount: (state, { payload }) => {
       //   console.log("ID ID ID ===== >", payload);
@@ -41,8 +43,9 @@ export const cartSlice = createSlice({
           return item;
         }
       });
-      console.log(" sort sort ssort", amountIncreased);
+      // console.log(" sort sort ssort", amountIncreased);
       state.product = amountIncreased;
+      state.cartProducts = amountIncreased;
       state.cartQuantityTotal = amountIncreased.reduce(
         (a, x) => a + x.amount,
         0
@@ -59,6 +62,7 @@ export const cartSlice = createSlice({
       });
       // console.log(' sort sort ssort', amountIncreased)
       state.product = amountDecreased;
+      state.cartProducts = amountDecreased;
       state.cartQuantityTotal = amountDecreased.reduce(
         (a, x) => a + x.amount,
         0
@@ -78,11 +82,12 @@ export const cartSlice = createSlice({
       });
       // console.log(' one one one one one', payload)
       state.product = amountIncreased;
+      state.cartProducts = amountIncreased;
     },
     cartTotal: (state, { payload }) => {
       console.log("reducer items check here", payload);
       state.cartPriceTotal = payload.reduce(
-        (a, x) => a + x.amount * x.price * 83,
+        (a, x) => a + (x.amount * (x.price * 83)),
         0
       );
       state.cartQuantityTotal = payload.reduce((a, x) => a + x.amount, 0);
