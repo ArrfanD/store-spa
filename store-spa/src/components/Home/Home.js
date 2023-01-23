@@ -6,6 +6,7 @@ import HomeHeader from "../../assets/images/home-header3.jpg";
 import ItemCard from "./ItemCard/ItemCard";
 import { motion, useScroll } from "framer-motion"
 import { addProductToCart, setInitialState } from '../../redux/Slices/cartSlice'
+import { isLogin } from "../../redux/Slices/loginSlice";
 
 const Home = () => {
 const { scrollYProgress } = useScroll();
@@ -24,7 +25,7 @@ let dataFetcher = async () => {
 
   useEffect(() => {
       dataFetcher();
-    
+      dispatch(isLogin(false))
   }, []);
 
   let cartProductSender = (value) => {
