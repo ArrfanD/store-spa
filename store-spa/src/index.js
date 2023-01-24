@@ -7,7 +7,6 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
-import LoginModal from "./components/Login/Login";
 
 let persistor = persistStore(store);
 
@@ -17,6 +16,7 @@ root.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <App />
+        <div id="portal"></div>
       </PersistGate>
     </Provider>
   </React.StrictMode>

@@ -4,17 +4,20 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { BrowserRouter } from "react-router-dom";
 import LoginModal from "./components/Login/Login";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { isLogin } from "./redux/Slices/loginSlice";
+import LoginBackdrop from "./components/Login/LoginBackdrop";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
-  let dispatch = useDispatch()
-  let {login : { isLoginBoolean } } = useSelector((state) => state)
+  let dispatch = useDispatch();
+  let {
+    login: { isLoginBoolean },
+  } = useSelector((state) => state);
 
-  function onClose(val){
-    dispatch(isLogin(val))
+  function onClose(val) {
+    dispatch(isLogin(val));
   }
 
   return (
@@ -23,7 +26,7 @@ function App() {
         <Header />
         <MainPage />
         <Footer />
-        <LoginModal open={isLoginBoolean} onClose={onClose}>Data is Shown Here</LoginModal>
+        <LoginModal open={isLoginBoolean} onClose={onClose} />
       </BrowserRouter>
     </div>
   );

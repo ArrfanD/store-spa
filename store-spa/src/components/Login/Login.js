@@ -1,13 +1,154 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import LoginBackdrop from "./LoginBackdrop";
+import { useSelector } from "react-redux";
+import loginImg from "../../assets/images/icons/login.svg";
+import { useNavigate } from "react-router-dom";
 
-const LoginModal = ({ children, open, onClose }) => {
-  console.log("is open logged in the modal component", open);
+let dropIn = {
+  hidden: {
+    y: "-100vh",
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.1,
+      type: "spring",
+      damping: 25,
+      stiffness: 500,
+    },
+  },
+  exit: {
+    y: "100vh",
+    opacity: 0,
+  },
+};
+
+const LoginModal = ({ open, onClose }) => {
+  let navigate = useNavigate()
+  let [errorObj, setIsError] = useState({});
+
+  let [formData, setFormData] = useState({
+    nameEmail: "",
+    password: "",
+  });
+
+  let {
+    login: { isLoginBoolean },
+  } = useSelector((state) => state);
+
+  function handleChange(e) {
+    e.preventDefault();
+    // console.log("data here ====> ", [e.target.name, e.target.value]);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  function isError(e) {
+    let errorObject = {}
+    let { nameEmail, password } = formData;
+    var regularExpression = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (regularExpression.test(password)) {
+      // console.log("password approved");
+    } else {
+      errorObject = ({
+        ...errorObject,
+        password: "please enter the password correctly",
+      });
+    }
+
+    if (emailRegex.test(nameEmail)) {
+      // console.log("mail approved");
+    } else {
+      errorObject = ({
+        ...errorObject,
+        nameEmail: "please enter the email correctly",
+      });
+    }
+    return errorObject
+  }
+
+  function handleSubmit(e){
+    e.preventDefault()
+    let dataOfError = isError()
+
+    if (Object.keys(dataOfError).length){
+      console.log('Please fill the form correctly')
+    } else{
+      navigate('cart')
+    }
+  }
+
   if (!open) return null;
+
   return (
-    <div className="absolute z-50 top-40 left-0 right-0">
-      {children} <br />
-      <button onClick={() => onClose(false)}>Close Modal</button>
-    </div>
+    <LoginBackdrop onClose={onClose} open={isLoginBoolean}>
+      <AnimatePresence>
+        <motion.div
+          key="login"
+          onClick={(e) => e.stopPropagation()}
+          variants={dropIn}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <div className="flex h-[75vh]">
+            <div className="flex flex-col justify-between p-6 items-center bg-[#2874f0]">
+              <div>
+                <h1 className="text-left text-[27px] text-white font-semibold">
+                  Login
+                </h1>
+                <p className="text-left text-[16px] mt-4 w-[183px] text-gray-300">
+                  Get access to your Orders, Wishlist and Recommendations
+                </p>
+              </div>
+              <img src={loginImg} alt="img" className="w-[200px] h-auto" />
+            </div>
+            <div className="flex flex-col justify-between bg-white p-6 w-[400px]">
+              <form
+                className="flex flex-col items-start gap-2"
+                onSubmit={handleSubmit}
+              >
+                <label htmlFor="nameEmail">
+                  Please enter username or email
+                </label>
+                <input
+                  type="text"
+                  name="nameEmail"
+                  className="shadow-inner w-full"
+                  onChange={handleChange}
+                />
+                <label htmlFor="password">Please enter the password</label>
+                <input
+                  type="password"
+                  name="password"
+                  className="shadow-inner w-full"
+                  onChange={handleChange}
+                />
+                <p className="text-[13px] text-left">
+                  By continuing, you agree to Blisscart's Terms of Use and
+                  Privacy Policy.
+                </p>
+                <button
+                  type="submit"
+                  className="mt-4 w-full h-10 rounded-sm text-white font-semibold text-[14px] bg-[#fb641b]"
+                >
+                  Login
+                </button>
+              </form>
+              <div className="flex flex-col">
+                <p>Don't have an account?</p>
+                <button onClick={navigate('/register')}>Sign up</button>
+              </div>
+            </div>
+          </div>
+          <button onClick={() => onClose(false)}>Close Modal</button>
+        </motion.div>
+      </AnimatePresence>
+    </LoginBackdrop>
   );
 };
 

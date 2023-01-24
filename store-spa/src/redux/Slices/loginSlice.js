@@ -17,7 +17,7 @@ export const loginSlice = createSlice({
             // console.log('what is this payload? ',payload )
         },
         isLogin: (state,{payload}) => {
-            console.log('action inside the isLogin reducer', payload)
+            // console.log('action inside the isLogin reducer', payload)
             state.isLoginBoolean = payload
         }
     }
