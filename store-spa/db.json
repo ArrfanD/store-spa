@@ -293,6 +293,46 @@
       "password": "Wg786#12892",
       "age": "31",
       "id": 3
+    },
+    {
+      "firstName": "Gaurav",
+      "lastName": "Jadhav",
+      "email": "gaurav@senwell.com",
+      "password": "E1sypark$",
+      "age": "23",
+      "id": 4
+    },
+    {
+      "firstName": "param",
+      "lastName": "don",
+      "email": "paramdon@gmail.com",
+      "password": "Paramdon#1",
+      "age": "24",
+      "id": 5
+    },
+    {
+      "firstName": "Arrfan",
+      "lastName": "Dange",
+      "email": "arfanhere@gmail.com",
+      "password": "Arrf%5678",
+      "age": "31",
+      "id": 6
+    },
+    {
+      "firstName": "hello",
+      "lastName": "dange",
+      "email": "arrfan.js@gmail.com",
+      "password": "Wg786#12892",
+      "age": "19",
+      "id": 7
+    },
+    {
+      "firstName": "bhikari",
+      "lastName": "bhikaran",
+      "email": "bhikari@gmail.com",
+      "password": "Wg786#12892",
+      "age": "30",
+      "id": 8
     }
   ]
 }

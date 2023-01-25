@@ -40,16 +40,16 @@ const LoginModal = ({ open, onClose }) => {
       .catch((err) => console.log("error ", err));
   };
 
-  useEffect(() => {
-    fetchUserRecords();
-  }, []);
 
-  let [errorObj, setIsError] = useState({});
 
   let [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    fetchUserRecords();
+  }, [formData]);
 
   let {
     login: { isLoginBoolean },
@@ -103,8 +103,9 @@ const LoginModal = ({ open, onClose }) => {
   function validateUser() {
     // console.log("DATA NOW PRESENT IN THE STATE", userRecords);
     console.log('form data', formData)
+    console.log('user records', userRecords)
     let checkMatch = userRecords.filter(x => x.email === formData.email && x.password === formData.password);
-    // console.log('here is the final result of checkMatch', Boolean(Object.keys(checkMatch).length))
+    console.log('here is the final result of checkMatch', Boolean(Object.keys(checkMatch).length))
     if (Boolean(Object.keys(checkMatch).length)) {
       navigate('/dashboard')
       dispatch(isLogin(false))
