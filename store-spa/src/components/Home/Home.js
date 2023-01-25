@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { logindata } from "../../redux/Slices/loginSlice";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HomeHeader from "../../assets/images/home-header3.jpg";

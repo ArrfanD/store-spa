@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
-    name: '',
-    phone: '',
-    email: '',
+    userProfile: {},
     isLoginBoolean: false,
+    onlineUserId: '',
     dataArray: []
 }
 

@@ -4,6 +4,7 @@ import LoginBackdrop from "./LoginBackdrop";
 import { useSelector } from "react-redux";
 import loginImg from "../../assets/images/icons/login.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 let dropIn = {
   hidden: {
@@ -27,7 +28,19 @@ let dropIn = {
 };
 
 const LoginModal = ({ open, onClose }) => {
-  let navigate = useNavigate()
+  let [userRecords, setUserRecords] = useState({});
+
+  let fetchUserRecords = async () => {
+    const response = await axios("http://localhost:3000/profile")
+      .then((res) => setUserRecords(res.data))
+      .catch((err) => console.log("error ", err));
+  };
+
+  useEffect(() => {
+    fetchUserRecords();
+  }, []);
+
+  let navigate = useNavigate();
   let [errorObj, setIsError] = useState({});
 
   let [formData, setFormData] = useState({
@@ -46,40 +59,50 @@ const LoginModal = ({ open, onClose }) => {
   }
 
   function isError(e) {
-    let errorObject = {}
+    let errorObject = {};
     let { nameEmail, password } = formData;
-    var regularExpression = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    var regularExpression =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (regularExpression.test(password)) {
       // console.log("password approved");
     } else {
-      errorObject = ({
+      errorObject = {
         ...errorObject,
         password: "please enter the password correctly",
-      });
+      };
     }
 
     if (emailRegex.test(nameEmail)) {
       // console.log("mail approved");
     } else {
-      errorObject = ({
+      errorObject = {
         ...errorObject,
         nameEmail: "please enter the email correctly",
-      });
+      };
     }
-    return errorObject
+    return errorObject;
   }
 
-  function handleSubmit(e){
-    e.preventDefault()
-    let dataOfError = isError()
+  function handleSubmit(e) {
+    e.preventDefault();
+    let dataOfError = isError();
 
-    if (Object.keys(dataOfError).length){
-      console.log('Please fill the form correctly')
-    } else{
-      navigate('cart')
+    if (Object.keys(dataOfError).length) {
+      console.log("Please fill the form correctly");
+    } else {
+      validateUser();
     }
+  }
+
+  function validateUser() {
+    let { email, password } = userRecords
+    // console.log("DATA NOW PRESENT IN THE STATE", userRecords);
+    console.log('form data', formData)
+    let checkMatch = userRecords.filter(x => x.email === formData.nameEmail && x.password === formData.password);
+    console.log('here is the final result of checkMatch', checkMatch)
+
   }
 
   if (!open) return null;
@@ -141,7 +164,7 @@ const LoginModal = ({ open, onClose }) => {
               </form>
               <div className="flex flex-col">
                 <p>Don't have an account?</p>
-                <button onClick={navigate('/register')}>Sign up</button>
+                <button onClick={() => navigate("/register")}>Sign up</button>
               </div>
             </div>
           </div>
@@ -153,4 +176,3 @@ const LoginModal = ({ open, onClose }) => {
 };
 
 export default LoginModal;
-

@@ -18,10 +18,6 @@ const Cart = () => {
   } = useSelector((state) => state);
   let cartProducts = product.filter((x) => x.amount > 0);
 
-  // console.log('cart price total =====>', cartPriceTotal)
-
-
-
   function handleQtyIncrease(value) {
     dispatch(increaseAmount(value));
     dispatch(cartTotal(cartProducts));

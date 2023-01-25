@@ -1,8 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
 
 const Register = () => {
-  let [formData, setFormData] = useState({firstName: '', lastName: '', email: '', password: '', age: ''});
+  let [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: "",
+  });
 
   function handleChange(e) {
     e.preventDefault();
@@ -23,17 +30,34 @@ const Register = () => {
       console.log("wrong password");
     }
 
-    if (passwordRegex.test(email) && email !== undefined) {
-      console.log("password is successfully entered");
+    if (emailRegex.test(email) && email !== undefined) {
+      console.log("email is successfully entered");
     } else {
       console.log("wrong email");
     }
+
+    if (age >= 18 && age <= 32 && age !== undefined) {
+      console.log("age is successfully entered");
+    } else {
+      console.log("wrong age");
+    }
   }
+  let formPut = async () => {
+    let response = await axios
+      .delete("http://localhost:3000/profile/3")
+      .then((res) => console.log("put request response", res));
+  };
+
 
   function handleSubmit(e) {
     e.preventDefault();
     let data = errorFunc();
-    console.log('data from the error function', data)
+    if (data) {
+      console.log("please fill your form properly");
+    } else {
+      console.log("perfect! go ahead and post the data now!");
+      formPut();
+    }
   }
 
   return (
