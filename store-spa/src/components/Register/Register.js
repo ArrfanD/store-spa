@@ -28,35 +28,44 @@ const Register = () => {
       console.log("password is successfully entered");
     } else {
       console.log("wrong password");
+      baseArr = {...baseArr, password: 'Please enter the password in the right format'}
     }
 
     if (emailRegex.test(email) && email !== undefined) {
       console.log("email is successfully entered");
     } else {
       console.log("wrong email");
+      baseArr = {...baseArr, email: 'Please enter the email in the right format'}
     }
 
     if (age >= 18 && age <= 32 && age !== undefined) {
       console.log("age is successfully entered");
     } else {
       console.log("wrong age");
+      baseArr = {...baseArr, age: 'the age you entered is beyond range'}
     }
+
+    return baseArr;
   }
+
   let formPut = async () => {
     let response = await axios
-      .delete("http://localhost:3000/profile/3")
+      .post("http://localhost:3000/profile",formData)
       .then((res) => console.log("put request response", res));
   };
+
+  console.log('ye data dekhleye dekhle', formData)
 
 
   function handleSubmit(e) {
     e.preventDefault();
     let data = errorFunc();
-    if (data) {
+    console.log('check this mannnnn', data)
+    if (Object.keys(data).length) {
       console.log("please fill your form properly");
     } else {
       console.log("perfect! go ahead and post the data now!");
-      formPut();
+      formPut()
     }
   }
 

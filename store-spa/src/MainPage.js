@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import Error from "./components/Error/Error";
 import ProductPage from "./components/ProductPage/ProductPage";
 import Register from "./components/Register/Register";
+import UserDashboard from "./components/userDashboard/UserDashboard";
 
 const MainPage = () => {
   return (
@@ -17,6 +18,7 @@ const MainPage = () => {
       <Route path="/product" element={<ProductPage />} />
       <Route path="/cart/:id" element={<Cart />} />
       <Route path="/register" element={<Register />}/>
+      <Route path="/dashboard" element={<UserDashboard />} />
     </Routes>
   );
 };

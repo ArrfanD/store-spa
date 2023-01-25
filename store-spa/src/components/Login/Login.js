@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoginBackdrop from "./LoginBackdrop";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import loginImg from "../../assets/images/icons/login.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { isLogin } from "../../redux/Slices/loginSlice";
 
 let dropIn = {
   hidden: {
@@ -28,6 +29,9 @@ let dropIn = {
 };
 
 const LoginModal = ({ open, onClose }) => {
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
+
   let [userRecords, setUserRecords] = useState({});
 
   let fetchUserRecords = async () => {
@@ -40,11 +44,10 @@ const LoginModal = ({ open, onClose }) => {
     fetchUserRecords();
   }, []);
 
-  let navigate = useNavigate();
   let [errorObj, setIsError] = useState({});
 
   let [formData, setFormData] = useState({
-    nameEmail: "",
+    email: "",
     password: "",
   });
 
@@ -60,7 +63,7 @@ const LoginModal = ({ open, onClose }) => {
 
   function isError(e) {
     let errorObject = {};
-    let { nameEmail, password } = formData;
+    let { email, password } = formData;
     var regularExpression =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -74,12 +77,12 @@ const LoginModal = ({ open, onClose }) => {
       };
     }
 
-    if (emailRegex.test(nameEmail)) {
+    if (emailRegex.test(email)) {
       // console.log("mail approved");
     } else {
       errorObject = {
         ...errorObject,
-        nameEmail: "please enter the email correctly",
+        email: "please enter the email correctly",
       };
     }
     return errorObject;
@@ -88,6 +91,7 @@ const LoginModal = ({ open, onClose }) => {
   function handleSubmit(e) {
     e.preventDefault();
     let dataOfError = isError();
+    console.log('data of error is here', Object.keys(dataOfError).length)
 
     if (Object.keys(dataOfError).length) {
       console.log("Please fill the form correctly");
@@ -97,12 +101,17 @@ const LoginModal = ({ open, onClose }) => {
   }
 
   function validateUser() {
-    let { email, password } = userRecords
     // console.log("DATA NOW PRESENT IN THE STATE", userRecords);
     console.log('form data', formData)
-    let checkMatch = userRecords.filter(x => x.email === formData.nameEmail && x.password === formData.password);
-    console.log('here is the final result of checkMatch', checkMatch)
-
+    let checkMatch = userRecords.filter(x => x.email === formData.email && x.password === formData.password);
+    // console.log('here is the final result of checkMatch', Boolean(Object.keys(checkMatch).length))
+    if (Boolean(Object.keys(checkMatch).length)) {
+      navigate('/dashboard')
+      dispatch(isLogin(false))
+    } else {
+      console.log("Chak bhak bsdk")
+    }
+    
   }
 
   if (!open) return null;
@@ -135,12 +144,12 @@ const LoginModal = ({ open, onClose }) => {
                 className="flex flex-col items-start gap-2"
                 onSubmit={handleSubmit}
               >
-                <label htmlFor="nameEmail">
+                <label htmlFor="email">
                   Please enter username or email
                 </label>
                 <input
                   type="text"
-                  name="nameEmail"
+                  name="email"
                   className="shadow-inner w-full"
                   onChange={handleChange}
                 />
