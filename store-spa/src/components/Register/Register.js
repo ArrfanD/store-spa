@@ -1,8 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { regBoolean } from "../../redux/Slices/loginSlice";
+
 
 const Register = () => {
+  let navigate = useNavigate()
+  let dispatch = useDispatch();
+
   let [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -54,8 +61,7 @@ const Register = () => {
       .then((res) => console.log("put request response", res));
   };
 
-  console.log('ye data dekhleye dekhle', formData)
-
+  console.log('form data after its state is updated', formData)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -64,8 +70,10 @@ const Register = () => {
     if (Object.keys(data).length) {
       console.log("please fill your form properly");
     } else {
-      console.log("perfect! go ahead and post the data now!");
+      alert("perfect! go ahead and post the data now!");
       formPut()
+      dispatch(regBoolean(true))
+      navigate('/regsuccess')
     }
   }
 

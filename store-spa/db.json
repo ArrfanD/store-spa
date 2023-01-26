@@ -333,6 +333,46 @@
       "password": "Wg786#12892",
       "age": "30",
       "id": 8
+    },
+    {
+      "firstName": "testUser",
+      "lastName": "testSurname",
+      "email": "testuser@gmail.com",
+      "password": "E1sypark$",
+      "age": "27",
+      "id": 9
+    },
+    {
+      "firstName": "new",
+      "lastName": "user",
+      "email": "newuser@gmail.com",
+      "password": "Wg786#12892",
+      "age": "27",
+      "id": 10
+    },
+    {
+      "firstName": "samreen",
+      "lastName": "khan",
+      "email": "samreenk@gmail.com",
+      "password": "E1sypark$",
+      "age": "31",
+      "id": 11
+    },
+    {
+      "firstName": "rajesh ",
+      "lastName": "patil",
+      "email": "rajmachine98@yahoo.com",
+      "password": "Wg786#12892",
+      "age": "27",
+      "id": 12
+    },
+    {
+      "firstName": "kiran",
+      "lastName": "naik",
+      "email": "kirannaik@gmail.com",
+      "password": "Wg786#12892",
+      "age": "32",
+      "id": 13
     }
   ]
 }

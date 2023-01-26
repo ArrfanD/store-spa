@@ -8,7 +8,7 @@ import {
   addProductToCart,
   setInitialState,
 } from "../../redux/Slices/cartSlice";
-import { isLogin } from "../../redux/Slices/loginSlice";
+import { isLogin, regBoolean } from "../../redux/Slices/loginSlice";
 
 const Home = () => {
   const { scrollYProgress } = useScroll();
@@ -27,6 +27,7 @@ const Home = () => {
   useEffect(() => {
     dataFetcher();
     dispatch(isLogin(false));
+    dispatch(regBoolean(false));
   }, []);
 
   let cartProductSender = (value) => {

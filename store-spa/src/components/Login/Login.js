@@ -40,8 +40,6 @@ const LoginModal = ({ open, onClose }) => {
       .catch((err) => console.log("error ", err));
   };
 
-
-
   let [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -91,7 +89,7 @@ const LoginModal = ({ open, onClose }) => {
   function handleSubmit(e) {
     e.preventDefault();
     let dataOfError = isError();
-    console.log('data of error is here', Object.keys(dataOfError).length)
+    console.log("data of error is here", Object.keys(dataOfError).length);
 
     if (Object.keys(dataOfError).length) {
       console.log("Please fill the form correctly");
@@ -102,17 +100,26 @@ const LoginModal = ({ open, onClose }) => {
 
   function validateUser() {
     // console.log("DATA NOW PRESENT IN THE STATE", userRecords);
-    console.log('form data', formData)
-    console.log('user records', userRecords)
-    let checkMatch = userRecords.filter(x => x.email === formData.email && x.password === formData.password);
-    console.log('here is the final result of checkMatch', Boolean(Object.keys(checkMatch).length))
+    // console.log("form data", formData);
+    // console.log("user records", userRecords);
+    let checkMatch = userRecords.filter(
+      (x) => x.email === formData.email && x.password === formData.password
+    );
+    console.log(
+      "here is the final result of checkMatch",
+      Boolean(Object.keys(checkMatch).length)
+    );
     if (Boolean(Object.keys(checkMatch).length)) {
-      navigate('/dashboard')
-      dispatch(isLogin(false))
+      navigate("/dashboard");
+      dispatch(isLogin(false));
     } else {
-      console.log("Chak bhak bsdk")
+      console.log("Chak bhak bsdk");
     }
-    
+  }
+
+  function handleSignup() {
+    navigate("/register");
+    dispatch(isLogin(false));
   }
 
   if (!open) return null;
@@ -145,9 +152,7 @@ const LoginModal = ({ open, onClose }) => {
                 className="flex flex-col items-start gap-2"
                 onSubmit={handleSubmit}
               >
-                <label htmlFor="email">
-                  Please enter username or email
-                </label>
+                <label htmlFor="email">Please enter username or email</label>
                 <input
                   type="text"
                   name="email"
@@ -174,11 +179,11 @@ const LoginModal = ({ open, onClose }) => {
               </form>
               <div className="flex flex-col">
                 <p>Don't have an account?</p>
-                <button onClick={() => navigate("/register")}>Sign up</button>
+                <button onClick={handleSignup}>Sign up</button>
               </div>
             </div>
           </div>
-          <button onClick={() => onClose(false)}>Close Modal</button>
+          {/* <button onClick={() => onClose(false)}>Close Modal</button> */}
         </motion.div>
       </AnimatePresence>
     </LoginBackdrop>
