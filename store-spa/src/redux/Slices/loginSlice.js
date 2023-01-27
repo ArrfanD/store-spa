@@ -5,7 +5,8 @@ let initialState = {
     isLoginBoolean: false,
     onlineUserId: '',
     isRegisterSuccess: false,
-    dataArray: []
+    dataArray: [],
+    isAlreadyRegistered: false
 }
 
 export const loginSlice = createSlice({
@@ -22,9 +23,12 @@ export const loginSlice = createSlice({
         },
         regBoolean: (state, {payload}) => {
             state.isRegisterSuccess = payload
+        },
+        alreadyRegistered: (state, {payload}) => {
+            state.isAlreadyRegistered = payload
         }
     }
 });
 
 export default loginSlice.reducer
-export const { logindata, isLogin, regBoolean } = loginSlice.actions
+export const { logindata, isLogin, regBoolean, alreadyRegistered } = loginSlice.actions

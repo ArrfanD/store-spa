@@ -6,15 +6,17 @@ import { BrowserRouter } from "react-router-dom";
 import LoginModal from "./components/Login/Login";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { isLogin, regBoolean } from "./redux/Slices/loginSlice";
+import { isLogin, regBoolean, alreadyRegistered } from "./redux/Slices/loginSlice";
 import RegisterSuccessModal from "./components/Register/RegisterSuccessModal/RegisterSuccessModal";
+import AlreadyRegisteredModal from "./components/Register/AlreadyRegistered/AlreadyRegisteredModal";
 
 function App() {
   let dispatch = useDispatch();
   let {
-    login: { isLoginBoolean, isRegisterSuccess },
+    login: { isLoginBoolean, isRegisterSuccess, isAlreadyRegistered },
   } = useSelector((state) => state);
 
+  console.log('is already registered boolean : ', isAlreadyRegistered)
 
   function onClose(val) {
     dispatch(isLogin(val));
@@ -33,8 +35,10 @@ function App() {
         <LoginModal open={isLoginBoolean} onClose={onClose} />
         <RegisterSuccessModal
           isOpen={isRegisterSuccess}
+          // isOpen={true}
           onClose={closeRegisterSuccessModal}
         />
+        <AlreadyRegisteredModal isOpen={isAlreadyRegistered} onClose={() => dispatch(alreadyRegistered(false))}/>
       </BrowserRouter>
     </div>
   );
