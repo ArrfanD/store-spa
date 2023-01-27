@@ -1,18 +1,50 @@
-import axios from 'axios'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import axios from "axios";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 const UserDashboard = () => {
+  let [userList, setUserList] = useState([]);
+  let [dataId, setDataId] = useState();
 
-    // let loginDataFetcher = async () => {
-    //     let data = await axios('http://localhost:3000/profile').then(res => console.log('dashboard response while fetching login details', res))
-        
-    // }
+  let fetchUserCredentials = async () => {
+    let response = await axios("http://localhost:3000/profile");
+    console.log("user list available in the dashboard section", response);
+    let userData = response?.data;
+    console.log('data avilable after calling api', userData)
+    setUserList(userData);
+  };
+
+  useEffect(() => {
+    fetchUserCredentials();
+  }, []);
+
+  console.log("user list available in the dashboard section", userList);
+  console.log('id taken ', dataId)
+
   return (
-    <div>
-      <h1>This is the Dashboard</h1>
+    <div className="bg-[whitesmoke] p-6">
+      <h1>This is the Admin Dashboard for your Admin account!</h1>
+      <div className="flex flex-col justify-center items-center">
+        <p>User List</p>
+        <div className="flex flex-wrap gap-2 items-center justify-center mt-3">
+          {userList?.map((x, i) => {
+            let { id, firstName, lastName, email, password, age } = x;
+            return (
+              <motion.div onClick={()=> setDataId(id)} whileHover={{ scale: '1.1' }} whileTap={{ scale: 0.9 }} className="bg-black/5 m-6 rounded-lg shadow-xl p-6">
+                <p>id: {id}</p>
+                <p>firstName: {firstName}</p>
+                <p>lastName: {lastName}</p>
+                <p>email: {email}</p>
+                <p>password: {password}</p>
+                <p>age: {age}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserDashboard
+export default UserDashboard;
