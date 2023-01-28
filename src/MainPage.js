@@ -6,7 +6,7 @@ import Login from "./components/Login/Login";
 import Error from "./components/Error/Error";
 import ProductPage from "./components/ProductPage/ProductPage";
 import Register from "./components/Register/Register";
-import UserDashboard from "./components/userDashboard/UserDashboard";
+import UserDashboard from "./components/userDashboard/userDashboard";
 import RegisterSuccessModal from "./components/Register/RegisterSuccessModal/RegisterSuccessModal";
 
 const MainPage = () => {
