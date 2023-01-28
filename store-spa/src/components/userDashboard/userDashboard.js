@@ -2,8 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userDashboardModal } from "../../redux/Slices/loginSlice";
 
 const UserDashboard = () => {
+  let dispatch = useDispatch()
+  let navigate = useNavigate()
+  let {login : { isUserLoggedIn, isUserDashboardDetailOpen }} = useSelector(state => state);
+
   let [userList, setUserList] = useState([]);
   let [dataId, setDataId] = useState();
 
@@ -20,6 +27,18 @@ const UserDashboard = () => {
   }, []);
 
   console.log("user list available in the dashboard section", userList);
+  console.log('dashboard deatil boolean : ', isUserDashboardDetailOpen)
+
+  if (!isUserLoggedIn) return <div>
+    Sorry But you are not logged in!
+    <button onClick={() => navigate('/login')}></button>
+  </div>
+
+  function handleUserPageClick (val){
+    dispatch(userDashboardModal(true));
+    setDataId(val);
+  }
+
   console.log('id taken ', dataId)
 
   return (
@@ -31,7 +50,7 @@ const UserDashboard = () => {
           {userList?.map((x, i) => {
             let { id, firstName, lastName, email, password, age } = x;
             return (
-              <motion.div onClick={()=> setDataId(id)} whileHover={{ scale: '1.1' }} whileTap={{ scale: 0.9 }} className="bg-black/5 m-6 rounded-lg shadow-xl p-6">
+              <motion.div onClick={() => handleUserPageClick(id)} whileHover={{ scale: '1.1' }} whileTap={{ scale: 0.9 }} className="bg-black/5 m-6 rounded-lg shadow-xl p-6">
                 <p>id: {id}</p>
                 <p>firstName: {firstName}</p>
                 <p>lastName: {lastName}</p>

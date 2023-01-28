@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { isLogin, regBoolean, alreadyRegistered } from "./redux/Slices/loginSlice";
 import RegisterSuccessModal from "./components/Register/RegisterSuccessModal/RegisterSuccessModal";
 import AlreadyRegisteredModal from "./components/Register/AlreadyRegistered/AlreadyRegisteredModal";
+import UserDetailModal from "./components/userDashboard/userDetail/UserDetailModal";
 
 function App() {
   let dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
           onClose={closeRegisterSuccessModal}
         />
         <AlreadyRegisteredModal isOpen={isAlreadyRegistered} onClose={() => dispatch(alreadyRegistered(false))}/>
+        <UserDetailModal />
       </BrowserRouter>
     </div>
   );

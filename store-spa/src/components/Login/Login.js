@@ -6,6 +6,7 @@ import loginImg from "../../assets/images/icons/login.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { isLogin } from "../../redux/Slices/loginSlice";
+import { userLoggedIn } from "../../redux/Slices/loginSlice";
 
 let dropIn = {
   hidden: {
@@ -110,6 +111,7 @@ const LoginModal = ({ open, onClose }) => {
       Boolean(Object.keys(checkMatch).length)
     );
     if (Boolean(Object.keys(checkMatch).length)) {
+      dispatch(userLoggedIn(true));
       navigate("/dashboard");
       dispatch(isLogin(false));
     } else {
