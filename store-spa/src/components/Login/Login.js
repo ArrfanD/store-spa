@@ -116,6 +116,7 @@ const LoginModal = ({ open, onClose }) => {
       dispatch(isLogin(false));
     } else {
       console.log("Chak bhak bsdk");
+      dispatch(userLoggedIn(false));
     }
   }
 

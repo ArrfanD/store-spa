@@ -8,9 +8,17 @@ import {
   addProductToCart,
   setInitialState,
 } from "../../redux/Slices/cartSlice";
-import { isLogin, regBoolean, alreadyRegistered, userDashboardModal } from "../../redux/Slices/loginSlice";
+import {
+  isLogin,
+  regBoolean,
+  alreadyRegistered,
+  userDashboardModal,
+  dashboardSelectedUser,
+  fetchUserList,
+} from "../../redux/Slices/loginSlice";
 
 const Home = () => {
+  let dispatch = useDispatch();
   const { scrollYProgress } = useScroll();
 
   let dataFetcher = async () => {
@@ -19,17 +27,25 @@ const Home = () => {
     dispatch(setInitialState(apiResp));
   };
 
-  let dispatch = useDispatch();
+  let userListFetcher = async () => {
+    const response = await axios("http://localhost:3000/profile").catch((err) =>
+      console.log("error while fetching user list", err)
+    );
+    dispatch(fetchUserList(response.data))
+  };
+
   let {
-    cart: { product, quantity },
+    cart: { product, quantity }, login: {dataArray}
   } = useSelector((state) => state);
 
   useEffect(() => {
     dataFetcher();
+    userListFetcher();
     dispatch(isLogin(false));
     dispatch(regBoolean(false));
     dispatch(alreadyRegistered(false));
-    dispatch(userDashboardModal(false))
+    dispatch(userDashboardModal(false));
+    dispatch(dashboardSelectedUser(0));
   }, []);
 
   let cartProductSender = (value) => {

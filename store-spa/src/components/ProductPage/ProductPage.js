@@ -27,10 +27,6 @@ const ProductPage = () => {
   } = sortedProduct[0];
   const SimilarProductList = product.filter((x) => x.category === category);
   console.log("ID ID ID ID ID ID ", id);
-  // function handleAddSingleProductToCart (id) {
-  //   dispatch(addProductToCartOnce(id))
-    
-  // }
 
   return (
     <div className="flex flex-col">

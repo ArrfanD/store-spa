@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userDashboardModal } from "../../redux/Slices/loginSlice";
+import { userDashboardModal, dashboardSelectedUser } from "../../redux/Slices/loginSlice";
 
 const UserDashboard = () => {
   let dispatch = useDispatch()
@@ -12,7 +12,7 @@ const UserDashboard = () => {
   let {login : { isUserLoggedIn, isUserDashboardDetailOpen }} = useSelector(state => state);
 
   let [userList, setUserList] = useState([]);
-  let [dataId, setDataId] = useState();
+  // let [dataId, setDataId] = useState();
 
   let fetchUserCredentials = async () => {
     let response = await axios("http://localhost:3000/profile");
@@ -36,10 +36,9 @@ const UserDashboard = () => {
 
   function handleUserPageClick (val){
     dispatch(userDashboardModal(true));
-    setDataId(val);
+    // setDataId(val);
+    dispatch(dashboardSelectedUser(val))
   }
-
-  console.log('id taken ', dataId)
 
   return (
     <div className="bg-[whitesmoke] p-6">
