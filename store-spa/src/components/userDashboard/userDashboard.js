@@ -16,9 +16,9 @@ const UserDashboard = () => {
 
   let fetchUserCredentials = async () => {
     let response = await axios("http://localhost:3000/profile");
-    console.log("user list available in the dashboard section", response);
+    // console.log("user list available in the dashboard section", response);
     let userData = response?.data;
-    console.log('data avilable after calling api', userData)
+    // console.log('data avilable after calling api', userData)
     setUserList(userData);
   };
 

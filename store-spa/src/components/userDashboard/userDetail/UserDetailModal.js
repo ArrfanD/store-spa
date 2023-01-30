@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useRef } from "react";
 import UserDetailBackdrop from "./UserDetailBackdrop";
 // import { ReactDOM } from "react-dom/client";
 import { useSelector, useDispatch } from "react-redux";
 import { userDashboardModal } from "../../../redux/Slices/loginSlice";
 import { useState } from "react";
 import axios from "axios";
-
-// const portalElement = document.getElementById("portal-div");
+import { useEffect } from "react";
 
 const UserDetailModal = () => {
+  const btnRef = useRef();
+  console.log("ref is here ====> ", btnRef);
+  let [dataArray, setDataArray] = useState([]);
   let [currentData, setCurrentData] = useState([]);
   let [dataId, setDataId] = useState("");
   let [putData, setPutData] = useState({});
   let dispatch = useDispatch();
   let {
-    login: { isUserDashboardDetailOpen, dashboardSelectedUser, dataArray },
+    login: { isUserDashboardDetailOpen, dashboardSelectedUser },
   } = useSelector((state) => state);
+
+  let fetchBackendData = async () => {
+    let response = await axios("http://localhost:3000/profile")
+      .then((res) => setDataArray(res.data))
+      .catch((err) => console.log("error : -", err));
+  };
+
+  useEffect(() => {
+    fetchBackendData();
+  }, []);
 
   function handleChange(e) {
     console.log("on change function output : ", [
@@ -28,7 +40,7 @@ const UserDetailModal = () => {
 
   // console.log("user === detail data id ", dashboardSelectedUser);
   // console.log('data of user list available from the backend ', dataArray);
-  let selectedUser = dataArray.filter(
+  let selectedUser = dataArray?.filter(
     (item) => item.id === dashboardSelectedUser
   );
   // console.log("seected user data in dashboard", selectedUser);
@@ -37,6 +49,7 @@ const UserDetailModal = () => {
       ...putData,
       [`${currentData[0]}`]: currentData[1],
     });
+    btnRef.current.focus();
   }
 
   console.log("only check this for now ======> ", putData);
@@ -44,7 +57,7 @@ const UserDetailModal = () => {
   let handleDataPut = async (val) => {
     console.log("this data will be sent to backend", putData);
     let response = await axios
-      .put(`http://localhost:3000/profile/${val}`, putData)
+      .patch(`http://localhost:3000/profile/${val}`, putData)
       .then((item) => console.log("response data ", item))
       .catch((err) => console.log("error here ", err));
   };
@@ -81,7 +94,9 @@ const UserDetailModal = () => {
                         className="ml-3 shadow-inner drop-shadow-lg"
                         type="text"
                       />{" "}
-                      <button onClick={handleSubmit}>Submit</button>
+                      <button  onClick={handleSubmit}>
+                        Submit
+                      </button>
                     </div>
                   ) : (
                     <span className="ml-3">{firstName}</span>
@@ -100,7 +115,7 @@ const UserDetailModal = () => {
                       <button onClick={handleSubmit}>Submit</button>
                     </div>
                   ) : (
-                    <span className="ml-3">{lastName}</span>
+                    <span  className="ml-3">{lastName}</span>
                   )}
                 </p>
                 <p className="flex" onClick={() => setDataId("email")}>
@@ -116,7 +131,7 @@ const UserDetailModal = () => {
                       <button onClick={handleSubmit}>Submit</button>
                     </div>
                   ) : (
-                    <span className="ml-3">{email}</span>
+                    <span  className="ml-3">{email}</span>
                   )}
                 </p>
                 <p className="flex" onClick={() => setDataId("age")}>
@@ -132,7 +147,7 @@ const UserDetailModal = () => {
                       <button onClick={handleSubmit}>Submit</button>
                     </div>
                   ) : (
-                    <span className="ml-3">{age}</span>
+                    <span  className="ml-3">{age}</span>
                   )}
                 </p>
                 <p className="flex" onClick={() => setDataId("password")}>
@@ -148,7 +163,7 @@ const UserDetailModal = () => {
                       <button onClick={handleSubmit}>Submit</button>
                     </div>
                   ) : (
-                    <span className="ml-3">{password}</span>
+                    <span  className="ml-3">{password}</span>
                   )}
                 </p>
               </div>
